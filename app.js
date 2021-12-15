@@ -63,4 +63,15 @@ app.use('/', (req, res, next) => {
   res.send('Hello');
 });
 
-app.listen(3000);
+const { DB_USER, DB_PASSWORD, DB_NAME } = process.env;
+
+mongoose
+  .connect(
+    `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.zaczj.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
+  )
+  .then(() => {
+    app.listen(3000);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
