@@ -2,10 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { graphqlHTTP } = require('express-graphql');
 const { buildSchema } = require('graphql');
+const mongoose = require('mongoose');
+
+const Event = require('./models/event');
 
 const app = express();
-
-const events = [];
 
 app.use(bodyParser.json());
 
@@ -42,17 +43,32 @@ app.use(
     }
   `),
     rootValue: {
-      events: () => events,
+      events: () => {
+        return Event.find()
+          .then((events) => {
+            return events.map((event) => {
+              return { ...event._doc, _id: event.id };
+            });
+          })
+          .catch((err) => {
+            throw err;
+          });
+      },
       createEvent: ({ event }) => {
-        const newEvent = {
-          _id: Math.random().toString(),
+        const newEvent = new Event({
           title: event.title,
           description: event.description,
           price: +event.price,
           date: event.date,
-        };
-        events.push(newEvent);
-        return newEvent;
+        });
+        return newEvent
+          .save()
+          .then((result) => {
+            return { ...result._doc, _id: result._doc._id.toString() };
+          })
+          .catch((err) => {
+            throw err;
+          });
       },
     },
     graphiql: true,
