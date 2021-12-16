@@ -1,10 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { graphqlHTTP } = require('express-graphql');
-const { buildSchema } = require('graphql');
 const mongoose = require('mongoose');
 
-const Event = require('./models/event');
+const graphQlSchema = require('./graphql/schema');
+const graphQlResolvers = require('./graphql/resolvers');
 
 const app = express();
 
@@ -13,64 +13,8 @@ app.use(bodyParser.json());
 app.use(
   '/graphql',
   graphqlHTTP({
-    schema: buildSchema(`
-    type Event {
-      _id: ID!
-      title: String!
-      description: String!
-      price: Float!
-      date: String!
-    }
-
-    input EventInput {
-      title: String!
-      description: String!
-      price: Float!
-      date: String!
-    }
-
-    type RootQuery {
-      events: [Event!]!
-    }
-
-    type RootMutation {
-      createEvent(event: EventInput): Event
-    }
-
-    schema {
-      query: RootQuery
-      mutation: RootMutation
-    }
-  `),
-    rootValue: {
-      events: () => {
-        return Event.find()
-          .then((events) => {
-            return events.map((event) => {
-              return { ...event._doc, _id: event.id };
-            });
-          })
-          .catch((err) => {
-            throw err;
-          });
-      },
-      createEvent: ({ event }) => {
-        const newEvent = new Event({
-          title: event.title,
-          description: event.description,
-          price: +event.price,
-          date: event.date,
-        });
-        return newEvent
-          .save()
-          .then((result) => {
-            return { ...result._doc, _id: result._doc._id.toString() };
-          })
-          .catch((err) => {
-            throw err;
-          });
-      },
-    },
+    schema: graphQlSchema,
+    rootValue: graphQlResolvers,
     graphiql: true,
   })
 );
