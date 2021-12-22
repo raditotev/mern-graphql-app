@@ -1,14 +1,18 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
 
+import AuthPage from './pages/AuthPage';
+import EventsPage from './pages/EventsPage';
+import BookingsPage from './pages/BookingsPage';
+
 import './App.css';
 
 function App() {
   return (
     <Switch>
-      <Redirect from="/" to="/auth" />
-      <Route path="/auth" component={null} />
-      <Route path="/events" component={null} />
-      <Route path="/bookings" component={null} />
+      <Redirect from="/" to="/auth" exact />
+      <Route path="/auth" component={AuthPage} />
+      <Route path="/events" component={EventsPage} />
+      <Route path="/bookings" component={BookingsPage} />
     </Switch>
   );
 }
