@@ -5,10 +5,12 @@ const mongoose = require('mongoose');
 
 const graphQlSchema = require('./graphql/schema');
 const graphQlResolvers = require('./graphql/resolvers');
+const validateRequest = require('./middleware/auth');
 
 const app = express();
 
 app.use(bodyParser.json());
+app.use(validateRequest);
 
 app.use(
   '/graphql',
@@ -20,7 +22,7 @@ app.use(
 );
 
 app.use('/', (req, res, next) => {
-  res.send('Hello');
+  res.send('Unknown path');
 });
 
 const { DB_USER, DB_PASSWORD, DB_NAME } = process.env;

@@ -2,7 +2,11 @@ const Booking = require('../../models/booking');
 const { transformEvent, transformBooking } = require('./helpers');
 
 module.exports = {
-  bookings: async () => {
+  bookings: async (args, req) => {
+    if (!req.isValid) {
+      throw new Error('Unauthenticated');
+    }
+
     try {
       const bookings = await Booking.find();
 
@@ -14,10 +18,14 @@ module.exports = {
       throw error;
     }
   },
-  bookEvent: async ({ eventId }) => {
+  bookEvent: async ({ eventId }, req) => {
+    if (!req.isValid) {
+      throw new Error('Unauthenticated');
+    }
+
     const newBooking = new Booking({
       event: eventId,
-      user: '61bb1aceb6b4c09940cb9f8c',
+      user: req.userId,
     });
 
     try {
@@ -29,7 +37,11 @@ module.exports = {
       throw error;
     }
   },
-  cancelBooking: async ({ bookingId }) => {
+  cancelBooking: async ({ bookingId }, req) => {
+    if (!req.isValid) {
+      throw new Error('Unauthenticated');
+    }
+
     try {
       const booking = await Booking.findById(bookingId).populate('event');
       const event = transformEvent(booking.event);

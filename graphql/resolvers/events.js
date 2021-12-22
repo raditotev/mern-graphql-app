@@ -13,13 +13,17 @@ module.exports = {
       throw error;
     }
   },
-  createEvent: async ({ event }) => {
+  createEvent: async ({ event }, req) => {
+    if (!req.isValid) {
+      throw new Error('Unauthenticated');
+    }
+
     const newEvent = new Event({
       title: event.title,
       description: event.description,
       price: +event.price,
       date: event.date,
-      creator: event.creator,
+      creator: req.userId,
     });
 
     let createdEvent;
