@@ -1,0 +1,37 @@
+.main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3.5rem;
+  background-color: rgb(20, 167, 172);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+}
+
+.main-header__logo h1 {
+  font-size: 1.75rem;
+}
+
+.main-header__items ul {
+  display: flex;
+  margin-right: 1.5rem;
+}
+
+.main-header__items li {
+  list-style: none;
+  margin-right: 1rem;
+}
+
+.main-header__items a {
+  text-decoration: none;
+  color: #000;
+}
+
+.main-header__items a:hover,
+.main-header__items a:active,
+.main-header__items a.active {
+  color: rgb(250, 250, 161);
+}
