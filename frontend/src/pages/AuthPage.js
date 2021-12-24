@@ -1,5 +1,86 @@
+import { useRef, useState } from 'react';
+
+import './AuthPage.css';
+
 const AuthPage = () => {
-  return <h1>Auth Page</h1>;
+  const [isLoginForm, setIsLoginForm] = useState(true);
+  const emailInput = useRef();
+  const passwordInput = useRef();
+
+  const submitHandler = async (event) => {
+    event.preventDefault();
+
+    const email = emailInput.current.value;
+    const password = passwordInput.current.value;
+
+    if (email.trim() === '' || password.trim() === '') {
+      return;
+    }
+
+    let query = {
+      query: `
+      mutation {
+        createUser(user: {email: "${email}", password: "${password}"}) {
+          _id
+          email
+        }
+      }
+      `,
+    };
+
+    if (isLoginForm) {
+      query = {
+        query: `
+          query {
+            login(email: "${email}", password: "${password}") {
+              userId
+              token
+              tokenExpiration
+            }
+          }
+        `,
+      };
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/graphql', {
+        method: 'POST',
+        body: JSON.stringify(query),
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const { data } = await response.json();
+      if (response.status !== 200 && response.status !== 201) {
+        throw new Error('Failed');
+      }
+
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const authenticationTypeHandler = () => {
+    setIsLoginForm((state) => !state);
+  };
+
+  return (
+    <form className="auth-form" onSubmit={submitHandler}>
+      <div className="form-control">
+        <label htmlFor="email">E-Mail</label>
+        <input ref={emailInput} type="email" name="email" />
+      </div>
+      <div className="form-control">
+        <label htmlFor="password">Password</label>
+        <input ref={passwordInput} type="password" name="password" />
+      </div>
+      <div className="form-actions">
+        <button type="button" onClick={authenticationTypeHandler}>
+          {isLoginForm ? 'Switch to Register' : 'Switch to Login'}
+        </button>
+        <button type="submit">{isLoginForm ? 'Login' : 'Sign up'}</button>
+      </div>
+    </form>
+  );
 };
 
 export default AuthPage;
