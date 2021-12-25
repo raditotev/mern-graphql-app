@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AuthContext } from '../frontend/src/context/auth-context';
+import { AuthContext } from '../context/auth-context';
 
 const useAuth = (props) => {
   const authContext = useContext(AuthContext);
