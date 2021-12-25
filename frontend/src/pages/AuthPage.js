@@ -1,11 +1,34 @@
 import { useRef, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import useAuth from '../hooks/auth-hook';
 
 import './AuthPage.css';
+
+const sendQuery = async (query) => {
+  try {
+    const response = await fetch('http://localhost:5000/graphql', {
+      method: 'POST',
+      body: JSON.stringify(query),
+      headers: { 'Content-Type': 'application/json' },
+    });
+    const { data } = await response.json();
+    if (response.status !== 200 && response.status !== 201) {
+      throw new Error('Failed');
+    }
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const AuthPage = () => {
   const [isLoginForm, setIsLoginForm] = useState(true);
   const emailInput = useRef();
   const passwordInput = useRef();
+  const history = useHistory();
+
+  const { login } = useAuth();
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -42,20 +65,12 @@ const AuthPage = () => {
       };
     }
 
-    try {
-      const response = await fetch('http://localhost:5000/graphql', {
-        method: 'POST',
-        body: JSON.stringify(query),
-        headers: { 'Content-Type': 'application/json' },
-      });
-      const { data } = await response.json();
-      if (response.status !== 200 && response.status !== 201) {
-        throw new Error('Failed');
-      }
+    const data = await sendQuery(query);
 
-      console.log(data);
-    } catch (error) {
-      console.log(error);
+    if (isLoginForm) {
+      const { userId, token, tokenExpiration } = data.login;
+      login(userId, token, tokenExpiration);
+      history.push('/events');
     }
   };
 
