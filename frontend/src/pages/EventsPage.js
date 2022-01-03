@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 
 import useAuth from '../hooks/auth-hook';
 import Modal from '../components/UI/Modal';
+import EventsList from '../components/EventsList/EventsList';
 import { sendQuery } from '../helpers/client';
 
 import './EventsPage.css';
@@ -83,30 +84,34 @@ const EventsPage = () => {
                   creator: "${userId}"
               }
             ){
+            _id
             title
             description
+            price
+            date
             }
         }
     `,
     };
 
-    await sendQuery(query, {
+    const data = await sendQuery(query, {
       Authorization: `Bearer ${token}`,
     });
 
     setShowModal(false);
-  };
 
-  const eventsList =
-    events.length > 0 ? (
-      <ul className="events-list">
-        {events.map((event) => (
-          <li key={event._id} className="events-item">
-            {event.title}
-          </li>
-        ))}
-      </ul>
-    ) : null;
+    const newEvent = {
+      ...data.createEvent,
+      creator: {
+        _id: userId,
+      },
+    };
+    setEvents((state) => {
+      const updatedEvents = [...state];
+      updatedEvents.push(newEvent);
+      return updatedEvents;
+    });
+  };
 
   return (
     <>
@@ -146,7 +151,7 @@ const EventsPage = () => {
           </button>
         </div>
       ) : null}
-      {eventsList}
+      <EventsList events={events} />
     </>
   );
 };
