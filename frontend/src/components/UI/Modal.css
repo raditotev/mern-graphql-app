@@ -37,3 +37,12 @@
 .modal__content form {
   margin: 2rem auto;
 }
+
+.modal__footer {
+  padding: 1rem;
+  float: right;
+}
+
+.modal__footer button {
+  margin-left: 1rem;
+}

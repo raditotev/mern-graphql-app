@@ -4,7 +4,7 @@ const Backdrop = ({ onCancel }) => (
   <div className="modal-backdrop" onClick={onCancel}></div>
 );
 
-const Modal = ({ title, onCancel, children }) => {
+const Modal = ({ title, onCancel, onConfirm, children }) => {
   return (
     <>
       <Backdrop onCancel={onCancel} />
@@ -13,6 +13,14 @@ const Modal = ({ title, onCancel, children }) => {
           <h1>{title}</h1>
         </header>
         <section className="modal__content">{children}</section>
+        <footer className="modal__footer">
+          <button className="btn" type="button" onClick={() => onCancel()}>
+            Cancel
+          </button>
+          <button className="btn" type="button" onClick={onConfirm}>
+            Confirm
+          </button>
+        </footer>
       </div>
     </>
   );
