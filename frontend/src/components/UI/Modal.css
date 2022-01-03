@@ -1,0 +1,39 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.65);
+}
+
+.modal {
+  width: 40rem;
+  max-width: 80%;
+  position: fixed;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  border: 1px solid #14a7ac;
+  border-radius: 4px;
+  background-color: whitesmoke;
+}
+
+.modal__header {
+  background-color: #14a7ac;
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+.modal__header h1 {
+  margin: 0;
+}
+
+.modal__content {
+  padding: 1rem;
+}
+
+.modal__content form {
+  margin: 2rem auto;
+}
