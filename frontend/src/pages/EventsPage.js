@@ -1,12 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
+import useAuth from '../hooks/auth-hook';
 import Modal from '../components/UI/Modal';
-import NewEvent from '../components/Events/NewEvent';
+import { sendQuery } from '../helpers/client';
 
 import './EventsPage.css';
 
 const EventsPage = () => {
   const [showModal, setShowModal] = useState(false);
+  const { isLoggedIn, token, userId } = useAuth();
+
+  const titleRef = useRef();
+  const descriptionRef = useRef();
+  const priceRef = useRef();
+  const dateRef = useRef();
 
   const showModalHandler = () => {
     setShowModal(true);
@@ -15,11 +22,81 @@ const EventsPage = () => {
   const hideModalHandler = () => {
     setShowModal(false);
   };
+
+  const createEventHandler = async () => {
+    const title = titleRef.current.value;
+    const description = descriptionRef.current.value;
+    const price = priceRef.current.value;
+    const date = dateRef.current.value;
+
+    const inputs = [title, description, price, date];
+
+    let invalidForm;
+
+    inputs.forEach((input) => {
+      if (!input || input.trim() === '') {
+        invalidForm = true;
+      }
+    });
+
+    if (invalidForm) {
+      return;
+    }
+
+    const query = {
+      query: `
+        mutation {
+          createEvent(
+              event: {
+                  title: "${title}",
+                  description: "${description}",
+                  price: ${+price},
+                  date: "${new Date(date).toISOString()}",
+                  creator: "${userId}"
+              }
+            ){
+            title
+            description
+            }
+        }
+    `,
+    };
+
+    await sendQuery(query, {
+      Authorization: `Bearer ${token}`,
+    });
+
+    setShowModal(false);
+  };
+
   return (
     <>
       {showModal ? (
-        <Modal title="Create new event" onCancel={hideModalHandler}>
-          <NewEvent closeModal={hideModalHandler} />
+        <Modal
+          title="Create new event"
+          onCancel={hideModalHandler}
+          onConfirm={createEventHandler}
+        >
+          <form className="form">
+            <div className="form-control">
+              <label htmlFor="title">Title</label>
+              <input ref={titleRef} type="text" name="title" />
+            </div>
+            <div className="form-control">
+              <label htmlFor="description">Description</label>
+              <textarea ref={descriptionRef} name="description" rows={3} />
+            </div>
+            <div className="form-group">
+              <div className="form-control">
+                <label htmlFor="price">Price</label>
+                <input ref={priceRef} type="text" name="price" />
+              </div>
+              <div className="form-control">
+                <label htmlFor="date">Date</label>
+                <input ref={dateRef} type="date" name="date" />
+              </div>
+            </div>
+          </form>
         </Modal>
       ) : null}
       <div className="events-page">
