@@ -8,12 +8,40 @@ import './EventsPage.css';
 
 const EventsPage = () => {
   const [showModal, setShowModal] = useState(false);
+  const [events, setEvents] = useState([]);
+
   const { isLoggedIn, token, userId } = useAuth();
 
   const titleRef = useRef();
   const descriptionRef = useRef();
   const priceRef = useRef();
   const dateRef = useRef();
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const query = {
+        query: `
+          query {
+            events {
+              _id
+              title
+              description
+              price
+              date
+              creator {
+                _id
+                email
+              }
+            }
+          }
+        `,
+      };
+      const data = await sendQuery(query);
+      setEvents(data.events);
+    };
+
+    fetchEvents();
+  }, []);
 
   const showModalHandler = () => {
     setShowModal(true);
@@ -69,6 +97,17 @@ const EventsPage = () => {
     setShowModal(false);
   };
 
+  const eventsList =
+    events.length > 0 ? (
+      <ul className="events-list">
+        {events.map((event) => (
+          <li key={event._id} className="events-item">
+            {event.title}
+          </li>
+        ))}
+      </ul>
+    ) : null;
+
   return (
     <>
       {showModal ? (
@@ -99,12 +138,15 @@ const EventsPage = () => {
           </form>
         </Modal>
       ) : null}
-      <div className="events-page">
-        <h1>Share new event with your friends</h1>
-        <button className="btn" type="button" onClick={showModalHandler}>
-          Create event
-        </button>
-      </div>
+      {isLoggedIn ? (
+        <div className="events-page">
+          <h1>Share new event with your friends</h1>
+          <button className="btn" type="button" onClick={showModalHandler}>
+            Create event
+          </button>
+        </div>
+      ) : null}
+      {eventsList}
     </>
   );
 };

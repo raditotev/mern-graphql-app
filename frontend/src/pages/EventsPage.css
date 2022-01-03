@@ -23,3 +23,17 @@
   border-color: #047a7e;
   color: white;
 }
+
+.events-list {
+  margin: 3rem auto;
+  list-style: none;
+  width: 30rem;
+  max-width: 90%;
+  padding: 1rem;
+}
+
+.events-item {
+  border: 1px solid #14a7ac;
+  margin: 0.5rem;
+  padding: 0.5rem 1rem;
+}
