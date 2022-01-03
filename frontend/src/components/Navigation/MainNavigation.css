@@ -15,9 +15,13 @@
   font-size: 1.75rem;
 }
 
+.main-header__items {
+  margin-right: 1rem;
+}
+
 .main-header__items ul {
   display: flex;
-  margin-right: 1.5rem;
+  align-items: center;
 }
 
 .main-header__items li {
@@ -25,13 +29,26 @@
   margin-right: 1rem;
 }
 
-.main-header__items a {
+.main-header__items a,
+.main-header__items button {
   text-decoration: none;
-  color: #000;
+  padding: 0.3rem 1rem;
+  color: white;
+  font-weight: bold;
+  border: none;
+  font-family: inherit;
+  margin: 0;
+  background-color: transparent;
+  font-size: inherit;
+  cursor: pointer;
 }
 
 .main-header__items a:hover,
 .main-header__items a:active,
+.main-header__items button:hover,
+.main-header__items button:active,
 .main-header__items a.active {
-  color: rgb(250, 250, 161);
+  background-color: white;
+  border-radius: 3px;
+  color: black;
 }

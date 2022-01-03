@@ -1,11 +1,11 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import useAuth from '../../hooks/auth-hook';
 
 import './MainNavigation.css';
 
 const MainNavigation = () => {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, logout } = useAuth();
 
   return (
     <header className="main-header">
@@ -24,9 +24,14 @@ const MainNavigation = () => {
               <NavLink to="/events">Events</NavLink>
             </li>
             {isLoggedIn ? (
-              <li>
-                <NavLink to="/bookings">Bookings</NavLink>
-              </li>
+              <>
+                <li>
+                  <NavLink to="/bookings">Bookings</NavLink>
+                </li>
+                <li>
+                  <button onClick={() => logout()}>Logout</button>
+                </li>
+              </>
             ) : null}
           </ul>
         </nav>
