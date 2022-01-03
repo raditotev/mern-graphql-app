@@ -2,25 +2,7 @@ import { useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import useAuth from '../hooks/auth-hook';
 
-import './AuthPage.css';
-
-const sendQuery = async (query) => {
-  try {
-    const response = await fetch('http://localhost:5000/graphql', {
-      method: 'POST',
-      body: JSON.stringify(query),
-      headers: { 'Content-Type': 'application/json' },
-    });
-    const { data } = await response.json();
-    if (response.status !== 200 && response.status !== 201) {
-      throw new Error('Failed');
-    }
-
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-};
+import { sendQuery } from '../helpers/client';
 
 const AuthPage = () => {
   const [isLoginForm, setIsLoginForm] = useState(true);
@@ -79,7 +61,7 @@ const AuthPage = () => {
   };
 
   return (
-    <form className="auth-form" onSubmit={submitHandler}>
+    <form className="form" onSubmit={submitHandler}>
       <div className="form-control">
         <label htmlFor="email">E-Mail</label>
         <input ref={emailInput} type="email" name="email" />
