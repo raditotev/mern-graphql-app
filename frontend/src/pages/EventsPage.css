@@ -1,0 +1,25 @@
+.events-page {
+  width: 40rem;
+  max-width: 80%;
+  margin: 5rem auto;
+  padding: 3rem;
+  border: 1px solid #14a7ac;
+  text-align: center;
+}
+
+.btn {
+  font-family: inherit;
+  font-size: 1.2rem;
+  border: 1px solid #14a7ac;
+  background-color: white;
+  border-radius: 3px;
+  padding: 0.5rem 1rem;
+}
+
+.btn:active,
+.btn:hover,
+.btn.active {
+  background-color: #047a7e;
+  border-color: #047a7e;
+  color: white;
+}
