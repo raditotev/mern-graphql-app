@@ -51,7 +51,7 @@ const AuthPage = () => {
 
     if (isLoginForm) {
       const { userId, token, tokenExpiration } = data.login;
-      login(userId, token, tokenExpiration);
+      login(token, userId, tokenExpiration);
       history.push('/events');
     }
   };
