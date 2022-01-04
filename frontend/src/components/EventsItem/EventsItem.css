@@ -2,4 +2,17 @@
   border: 1px solid #14a7ac;
   margin: 0.5rem auto;
   padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.events-item h1 {
+  color: #14a7ac;
+  font-size: 1.75rem;
+}
+
+.events-item h4 {
+  color: #333;
+  font-size: 1.25rem;
 }
