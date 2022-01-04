@@ -1,7 +1,7 @@
 import useAuth from '../../hooks/auth-hook';
 import './EventsItem.css';
 
-const EventsItem = ({ title, price, date, creator }) => {
+const EventsItem = ({ id, title, price, date, creator, onBookEvent }) => {
   const { userId } = useAuth();
   const isAuthor = userId === creator;
 
@@ -17,7 +17,9 @@ const EventsItem = ({ title, price, date, creator }) => {
         {isAuthor ? (
           <p>You are the creator of this event</p>
         ) : (
-          <button className="btn">View Details</button>
+          <button className="btn" onClick={onBookEvent.bind(this, id)}>
+            View Details
+          </button>
         )}
       </div>
     </li>

@@ -4,7 +4,7 @@ const Backdrop = ({ onCancel }) => (
   <div className="modal-backdrop" onClick={onCancel}></div>
 );
 
-const Modal = ({ title, onCancel, onConfirm, children }) => {
+const Modal = ({ title, onCancel, onConfirm, confirmText, children }) => {
   return (
     <>
       <Backdrop onCancel={onCancel} />
@@ -18,7 +18,7 @@ const Modal = ({ title, onCancel, onConfirm, children }) => {
             Cancel
           </button>
           <button className="btn" type="button" onClick={onConfirm}>
-            Confirm
+            {!!confirmText ? confirmText : 'Confirm'}
           </button>
         </footer>
       </div>

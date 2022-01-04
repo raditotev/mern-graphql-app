@@ -12,6 +12,7 @@ const EventsPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [event, setEvent] = useState(null);
 
   const { isLoggedIn, token, userId } = useAuth();
 
@@ -122,6 +123,20 @@ const EventsPage = () => {
     });
   };
 
+  const onBookEvent = (eventId) => {
+    const event = events.find((event) => event._id === eventId);
+    setEvent(event);
+  };
+
+  const cancelBookEvent = () => {
+    setEvent(null);
+  };
+
+  const completeBooking = () => {
+    console.log('Booked');
+    setEvent(null);
+  };
+
   return (
     <>
       {showModal ? (
@@ -152,6 +167,24 @@ const EventsPage = () => {
           </form>
         </Modal>
       ) : null}
+      {!!event ? (
+        <Modal
+          title="Book event"
+          onCancel={cancelBookEvent}
+          onConfirm={completeBooking}
+          confirmText="Book"
+        >
+          <div className="book-event">
+            <h1>{event.title}</h1>
+            <h4>
+              ${event.price} - {new Date(event.date).toLocaleDateString()}
+            </h4>
+          </div>
+          <div>
+            <p>{event.description}</p>
+          </div>
+        </Modal>
+      ) : null}
       {isLoggedIn ? (
         <div className="events-page">
           <h1>Share new event with your friends</h1>
@@ -160,7 +193,11 @@ const EventsPage = () => {
           </button>
         </div>
       ) : null}
-      {isLoading ? <Spinner /> : <EventsList events={events} />}
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <EventsList events={events} onBookEvent={onBookEvent} />
+      )}
     </>
   );
 };
