@@ -2,6 +2,40 @@ main {
   margin: 4rem 2.5rem;
 }
 
+.centered {
+  text-align: center;
+}
+
+.button-link {
+  font-family: inherit;
+  font-size: 1.2rem;
+  border: 1px solid #14a7ac;
+  background-color: white;
+  border-radius: 3px;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: black;
+}
+
+.btn {
+  font-family: inherit;
+  font-size: 1.2rem;
+  border: 1px solid #14a7ac;
+  background-color: white;
+  border-radius: 3px;
+  padding: 0.5rem 1rem;
+}
+
+.btn:active,
+.button-link:active,
+.btn:hover,
+.button-link:hover,
+.btn.active {
+  background-color: #047a7e;
+  border-color: #047a7e;
+  color: white;
+}
+
 .form {
   width: 30rem;
   max-width: 80%;
