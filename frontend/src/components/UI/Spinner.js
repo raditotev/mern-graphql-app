@@ -2,7 +2,7 @@ import './Spinner.css';
 
 const Spinner = () => (
   <div className="spinner">
-    <div class="lds-ring">
+    <div className="lds-ring">
       <div></div>
       <div></div>
       <div></div>
