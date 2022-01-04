@@ -22,7 +22,6 @@ const EventsPage = () => {
   const dateRef = useRef();
 
   useEffect(() => {
-    setIsLoading(true);
     const fetchEvents = async () => {
       const query = {
         query: `
@@ -44,6 +43,8 @@ const EventsPage = () => {
       const data = await sendQuery(query);
       setEvents(data.events);
     };
+
+    setIsLoading(true);
 
     try {
       fetchEvents();
@@ -132,8 +133,27 @@ const EventsPage = () => {
     setEvent(null);
   };
 
-  const completeBooking = () => {
-    console.log('Booked');
+  const completeBooking = async () => {
+    const query = {
+      query: `
+        mutation {
+          bookEvent(eventId: "${event._id}"){
+            _id
+            createdAt
+            event {
+              title
+              date
+            }
+          }
+        }
+    `,
+    };
+
+    const data = await sendQuery(query, {
+      Authorization: `Bearer ${token}`,
+    });
+
+    console.log(data);
     setEvent(null);
   };
 
