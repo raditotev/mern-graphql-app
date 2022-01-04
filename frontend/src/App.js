@@ -15,19 +15,21 @@ function App() {
     <>
       <MainNavigation />
       <main>
-        <Switch>
-          {isLoggedIn ? (
+        {isLoggedIn ? (
+          <Switch>
             <Redirect from="/" to="/events" exact />
-          ) : (
-            <Redirect from="/" to="/auth" exact />
-          )}
-          {isLoggedIn ? <Redirect from="/auth" to="/events" exact /> : null}
-          {isLoggedIn ? null : <Route path="/auth" component={AuthPage} />}
-          <Route path="/events" component={EventsPage} />
-          {isLoggedIn ? (
+            <Redirect from="/auth" to="/events" exact />
+            <Route path="/events" component={EventsPage} />
             <Route path="/bookings" component={BookingsPage} />
-          ) : null}
-        </Switch>
+          </Switch>
+        ) : (
+          <Switch>
+            <Redirect from="/" to="/auth" exact />
+            <Route path="/auth" component={AuthPage} />
+            <Route path="/events" component={EventsPage} />
+            <Redirect from="*" to="/events" />
+          </Switch>
+        )}
       </main>
     </>
   );
