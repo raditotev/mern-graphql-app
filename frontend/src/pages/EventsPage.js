@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 
 import useAuth from '../hooks/auth-hook';
 import Modal from '../components/UI/Modal';
+import Spinner from '../components/UI/Spinner';
 import EventsList from '../components/EventsList/EventsList';
 import { sendQuery } from '../helpers/client';
 
@@ -10,6 +11,7 @@ import './EventsPage.css';
 const EventsPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [events, setEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { isLoggedIn, token, userId } = useAuth();
 
@@ -19,6 +21,7 @@ const EventsPage = () => {
   const dateRef = useRef();
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchEvents = async () => {
       const query = {
         query: `
@@ -41,7 +44,13 @@ const EventsPage = () => {
       setEvents(data.events);
     };
 
-    fetchEvents();
+    try {
+      fetchEvents();
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
+    setIsLoading(false);
   }, []);
 
   const showModalHandler = () => {
@@ -151,7 +160,7 @@ const EventsPage = () => {
           </button>
         </div>
       ) : null}
-      <EventsList events={events} />
+      {isLoading ? <Spinner /> : <EventsList events={events} />}
     </>
   );
 };
