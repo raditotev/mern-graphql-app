@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import BookingsList from '../components/BookingsList/BookingsList';
 import Spinner from '../components/UI/Spinner';
 import { sendQuery } from '../helpers/client';
 import useAuth from '../hooks/auth-hook';
@@ -55,6 +56,7 @@ const BookingsPage = () => {
       ))}
     </ul>
   );
+  return <BookingsList bookings={bookings} onCancelBooking={cancelBooking} />;
 };
 
 export default BookingsPage;
