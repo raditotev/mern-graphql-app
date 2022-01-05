@@ -163,6 +163,7 @@ const EventsPage = () => {
         <Modal
           title="Create new event"
           onCancel={hideModalHandler}
+          canConfirm
           onConfirm={createEventHandler}
         >
           <form className="form">
@@ -191,6 +192,7 @@ const EventsPage = () => {
         <Modal
           title="Book event"
           onCancel={cancelBookEvent}
+          canConfirm={isLoggedIn}
           onConfirm={completeBooking}
           confirmText="Book"
         >
