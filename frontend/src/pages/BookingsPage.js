@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import BookingsList from '../components/BookingsList/BookingsList';
 import Spinner from '../components/UI/Spinner';
 import { sendQuery } from '../helpers/client';
@@ -49,13 +50,17 @@ const BookingsPage = () => {
     return <Spinner />;
   }
 
-  return (
-    <ul>
-      {bookings.map((booking) => (
-        <li key={booking._id}>{booking.event.title}</li>
-      ))}
-    </ul>
-  );
+  if (bookings.length === 0) {
+    return (
+      <div className="centered">
+        <h3>There are no booking yet.</h3>
+        <Link to="/events" className="button-link">
+          Find an event
+        </Link>
+      </div>
+    );
+  }
+
   return <BookingsList bookings={bookings} onCancelBooking={cancelBooking} />;
 };
 
