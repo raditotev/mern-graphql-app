@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import BookingsChart from '../components/BookingsChart/BookingsChart';
+import BookingsControl from '../components/BookingsControl/BookingsControl';
 import BookingsList from '../components/BookingsList/BookingsList';
 import Spinner from '../components/UI/Spinner';
 import { sendQuery } from '../helpers/client';
@@ -8,6 +10,7 @@ import useAuth from '../hooks/auth-hook';
 const BookingsPage = () => {
   const [bookings, setBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isListing, setIsListing] = useState(true);
   const { token } = useAuth();
 
   useEffect(() => {
@@ -83,7 +86,19 @@ const BookingsPage = () => {
     );
   }
 
-  return <BookingsList bookings={bookings} onCancelBooking={cancelBooking} />;
+  return (
+    <>
+      <BookingsControl
+        isListing={isListing}
+        onChange={() => setIsListing((state) => !state)}
+      />
+      {isListing ? (
+        <BookingsList bookings={bookings} onCancelBooking={cancelBooking} />
+      ) : (
+        <BookingsChart bookings={bookings} />
+      )}
+    </>
+  );
 };
 
 export default BookingsPage;
