@@ -45,12 +45,15 @@ const BookingsPage = () => {
   const cancelBooking = async (bookingId) => {
     const query = {
       query: `
-        mutation {
-          cancelBooking(bookingId: "${bookingId}") {
+        mutation CancelBooking($id: ID!) {
+          cancelBooking(bookingId: $id) {
             _id
           }
         }
       `,
+      variables: {
+        id: bookingId,
+      },
     };
 
     try {

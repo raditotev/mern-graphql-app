@@ -85,14 +85,20 @@ const EventsPage = () => {
 
     const query = {
       query: `
-        mutation {
+        mutation newEvent(
+          $title: String!,
+          $description: String!,
+          $price: Float!,
+          $date: String!,
+          $creator: String!
+          ) {
           createEvent(
               event: {
-                  title: "${title}",
-                  description: "${description}",
-                  price: ${+price},
-                  date: "${new Date(date).toISOString()}",
-                  creator: "${userId}"
+                  title: $title,
+                  description: $description,
+                  price: $price,
+                  date: $date,
+                  creator: $creator
               }
             ){
             _id
@@ -103,6 +109,13 @@ const EventsPage = () => {
             }
         }
     `,
+      variables: {
+        title,
+        description,
+        price: +price,
+        date: new Date(date).toISOString(),
+        creator: userId,
+      },
     };
 
     const data = await sendQuery(query, {
@@ -136,8 +149,8 @@ const EventsPage = () => {
   const completeBooking = async () => {
     const query = {
       query: `
-        mutation {
-          bookEvent(eventId: "${event._id}"){
+        mutation bookEvent($id: ID!) {
+          bookEvent(eventId: $id){
             _id
             createdAt
             event {
@@ -147,6 +160,9 @@ const EventsPage = () => {
           }
         }
     `,
+      variables: {
+        id: event._id,
+      },
     };
 
     const data = await sendQuery(query, {

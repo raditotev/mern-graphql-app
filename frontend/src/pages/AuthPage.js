@@ -24,26 +24,34 @@ const AuthPage = () => {
 
     let query = {
       query: `
-      mutation {
-        createUser(user: {email: "${email}", password: "${password}"}) {
-          _id
-          email
+        mutation createUser($email: String!, $password: String!) {
+          createUser(user: {email: $email, password: $password}) {
+            _id
+            email
+          }
         }
-      }
       `,
+      variables: {
+        email,
+        password,
+      },
     };
 
     if (isLoginForm) {
       query = {
         query: `
-          query {
-            login(email: "${email}", password: "${password}") {
+          query loginUser($email: String!, $password: String!) {
+            login(email: $email, password: $password) {
               userId
               token
               tokenExpiration
             }
           }
         `,
+        variables: {
+          email,
+          password,
+        },
       };
     }
 
