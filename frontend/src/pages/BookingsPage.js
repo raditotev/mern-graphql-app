@@ -17,13 +17,9 @@ const BookingsPage = () => {
           query {
             bookings {
               _id
-              createdAt
               event {
                 title
                 date
-                creator {
-                  _id
-                }
               }
             }
           }
@@ -45,6 +41,29 @@ const BookingsPage = () => {
     }
     setIsLoading(false);
   }, [token]);
+
+  const cancelBooking = async (bookingId) => {
+    const query = {
+      query: `
+        mutation {
+          cancelBooking(bookingId: "${bookingId}") {
+            _id
+          }
+        }
+      `,
+    };
+
+    try {
+      await sendQuery(query, {
+        Authorization: `Bearer ${token}`,
+      });
+      setBookings((state) =>
+        state.filter((booking) => booking._id !== bookingId)
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (isLoading) {
     return <Spinner />;
