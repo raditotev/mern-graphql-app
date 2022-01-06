@@ -22,6 +22,7 @@ const BookingsPage = () => {
               _id
               event {
                 title
+                price
                 date
               }
             }
