@@ -6,8 +6,10 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartOptions,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import Booking from '../../models/Booking';
 
 import './BookingsChart.css';
 
@@ -20,7 +22,7 @@ ChartJS.register(
   Legend
 );
 
-const options = {
+const options: ChartOptions<'bar'> = {
   responsive: true,
   plugins: {
     legend: {
@@ -40,7 +42,7 @@ const options = {
 };
 const labels = ['Cheap', 'Normal', 'Expensive'];
 
-const BookingsChart = ({ bookings }) => {
+const BookingsChart: React.FC<{ bookings: Booking[] }> = ({ bookings }) => {
   const priceBuckets = {
     cheap: 0,
     normal: 0,

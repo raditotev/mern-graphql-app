@@ -1,7 +1,14 @@
 import useAuth from '../../hooks/auth-hook';
 import './EventsItem.css';
 
-const EventsItem = ({ id, title, price, date, creator, onBookEvent }) => {
+const EventsItem: React.FC<{
+  id: string;
+  title: string;
+  price: number;
+  date: string;
+  creator: string;
+  onBookEvent;
+}> = ({ id, title, price, date, creator, onBookEvent }) => {
   const { userId } = useAuth();
   const isAuthor = userId === creator;
 
