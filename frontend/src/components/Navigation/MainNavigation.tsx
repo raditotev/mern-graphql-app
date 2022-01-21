@@ -1,10 +1,9 @@
-import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import useAuth from '../../hooks/auth-hook';
 
 import './MainNavigation.css';
 
-const MainNavigation = () => {
+const MainNavigation: React.FC = () => {
   const { isLoggedIn, logout } = useAuth();
 
   return (
