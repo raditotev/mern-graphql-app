@@ -49,7 +49,9 @@ const AuthContextProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ token, userId, login, logout, isLoggedIn }}>
+    <AuthContext.Provider
+      value={{ token, userId, login, logout, isLoggedIn, inContext: true }}
+    >
       {children}
     </AuthContext.Provider>
   );
