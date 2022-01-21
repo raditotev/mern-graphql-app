@@ -6,6 +6,7 @@ import BookingsList from '../components/BookingsList/BookingsList';
 import Spinner from '../components/UI/Spinner';
 import { sendQuery } from '../helpers/client';
 import useAuth from '../hooks/auth-hook';
+import Booking from '../models/Booking';
 
 const BookingsPage: React.FC = () => {
   const [bookings, setBookings] = useState([]);
@@ -46,7 +47,7 @@ const BookingsPage: React.FC = () => {
     setIsLoading(false);
   }, [token]);
 
-  const cancelBooking = async (bookingId) => {
+  const cancelBooking = async (bookingId: string) => {
     const query = {
       query: `
         mutation CancelBooking($id: ID!) {
@@ -65,7 +66,7 @@ const BookingsPage: React.FC = () => {
         Authorization: `Bearer ${token}`,
       });
       setBookings((state) =>
-        state.filter((booking) => booking._id !== bookingId)
+        state.filter((booking: Booking) => booking._id !== bookingId)
       );
     } catch (error) {
       console.log(error);

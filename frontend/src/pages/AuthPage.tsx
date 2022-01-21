@@ -12,7 +12,7 @@ const AuthPage: React.FC = () => {
 
   const { login } = useAuth();
 
-  const submitHandler = async (event) => {
+  const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
 
     const email = emailInput.current!.value;

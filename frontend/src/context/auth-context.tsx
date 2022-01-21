@@ -23,7 +23,7 @@ const AuthContextProvider: React.FC = ({ children }) => {
   const [userId, setUserId] = useState<string | null>(null);
   const isLoggedIn = !!token;
 
-  const login = (token, uid, expiration) => {
+  const login = (token: string, uid: string, expiration: number) => {
     setToken(token);
     setUserId(uid);
     const expirationTime = new Date().getTime() + expiration * 60 * 60 * 1000;

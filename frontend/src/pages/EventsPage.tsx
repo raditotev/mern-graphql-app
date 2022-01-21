@@ -138,7 +138,7 @@ const EventsPage: React.FC = () => {
     });
   };
 
-  const onBookEvent = (eventId) => {
+  const onBookEvent = (eventId: string) => {
     const event = events.find((event) => event._id === eventId);
     setEvent(event!);
   };
