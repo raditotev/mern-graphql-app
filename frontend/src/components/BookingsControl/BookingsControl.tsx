@@ -6,10 +6,10 @@ const BookingsControl: React.FC<{
 }> = ({ isListing, onChange }) => {
   return (
     <div className="bookings-control">
-      <button className={isListing ? 'active' : null} onClick={onChange}>
+      <button className={isListing ? 'active' : ''} onClick={onChange}>
         List
       </button>
-      <button className={isListing ? null : 'active'} onClick={onChange}>
+      <button className={isListing ? '' : 'active'} onClick={onChange}>
         Chart
       </button>
     </div>
