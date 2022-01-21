@@ -16,7 +16,7 @@ const AuthContext = createContext<{
   inContext: false,
 });
 
-let expirationTimer;
+let expirationTimer: NodeJS.Timeout;
 
 const AuthContextProvider: React.FC = ({ children }) => {
   const [token, setToken] = useState<string | null>(null);
@@ -26,7 +26,9 @@ const AuthContextProvider: React.FC = ({ children }) => {
   const login = (token: string, uid: string, expiration: number) => {
     setToken(token);
     setUserId(uid);
-    const expirationTime = new Date().getTime() + expiration * 60 * 60 * 1000;
+    const expirationTime = String(
+      new Date().getTime() + expiration * 60 * 60 * 1000
+    );
     localStorage.setItem('__easy_event__token__', token);
     localStorage.setItem('__easy_event__uid__', uid);
     localStorage.setItem('__easy_event___expiration_time__', expirationTime);
@@ -46,8 +48,8 @@ const AuthContextProvider: React.FC = ({ children }) => {
       return;
     }
     const uid = localStorage.getItem('__easy_event__uid__');
-    const expirationTime = localStorage.getItem(
-      '__easy_event___expiration_time__'
+    const expirationTime = Number(
+      localStorage.getItem('__easy_event___expiration_time__')
     );
     const remainingTime = expirationTime - new Date().getTime();
 
