@@ -15,8 +15,8 @@ const AuthPage = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
 
-    const email = emailInput.current.value;
-    const password = passwordInput.current.value;
+    const email = emailInput.current!.value;
+    const password = passwordInput.current!.value;
 
     if (email.trim() === '' || password.trim() === '') {
       return;

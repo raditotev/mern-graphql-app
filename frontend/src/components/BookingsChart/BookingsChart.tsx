@@ -62,7 +62,7 @@ const BookingsChart: React.FC<{ bookings: Booking[] }> = ({ bookings }) => {
     priceBuckets.expensive++;
   });
 
-  options.scales.y.max = priceBuckets.expensive + 1;
+  options.scales!.y!.max = priceBuckets.expensive + 1;
   const data = {
     labels,
     datasets: [

@@ -64,10 +64,10 @@ const EventsPage = () => {
   };
 
   const createEventHandler = async () => {
-    const title = titleRef.current.value;
-    const description = descriptionRef.current.value;
-    const price = priceRef.current.value;
-    const date = dateRef.current.value;
+    const title = titleRef.current!.value;
+    const description = descriptionRef.current!.value;
+    const price = priceRef.current!.value;
+    const date = dateRef.current!.value;
 
     const inputs = [title, description, price, date];
 
@@ -139,7 +139,7 @@ const EventsPage = () => {
 
   const onBookEvent = (eventId) => {
     const event = events.find((event) => event._id === eventId);
-    setEvent(event);
+    setEvent(event!);
   };
 
   const cancelBookEvent = () => {
@@ -161,7 +161,7 @@ const EventsPage = () => {
         }
     `,
       variables: {
-        id: event._id,
+        id: event!._id,
       },
     };
 
