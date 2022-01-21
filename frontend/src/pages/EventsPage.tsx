@@ -8,7 +8,7 @@ import { sendQuery } from '../helpers/client';
 
 import './EventsPage.css';
 
-const EventsPage = () => {
+const EventsPage: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

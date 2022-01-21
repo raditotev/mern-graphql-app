@@ -7,7 +7,7 @@ import Spinner from '../components/UI/Spinner';
 import { sendQuery } from '../helpers/client';
 import useAuth from '../hooks/auth-hook';
 
-const BookingsPage = () => {
+const BookingsPage: React.FC = () => {
   const [bookings, setBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isListing, setIsListing] = useState(true);

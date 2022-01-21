@@ -4,7 +4,7 @@ import useAuth from '../hooks/auth-hook';
 
 import { sendQuery } from '../helpers/client';
 
-const AuthPage = () => {
+const AuthPage: React.FC = () => {
   const [isLoginForm, setIsLoginForm] = useState(true);
   const emailInput = useRef();
   const passwordInput = useRef();

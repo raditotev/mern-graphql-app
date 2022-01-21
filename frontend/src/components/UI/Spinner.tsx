@@ -1,6 +1,6 @@
 import './Spinner.css';
 
-const Spinner = () => (
+const Spinner: React.FC = () => (
   <div className="spinner">
     <div className="lds-ring">
       <div></div>

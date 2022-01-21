@@ -8,7 +8,7 @@ import useAuth from './hooks/auth-hook';
 
 import './App.css';
 
-function App() {
+const App: React.FC = () => {
   const { isLoggedIn } = useAuth();
 
   return (
@@ -33,6 +33,6 @@ function App() {
       </main>
     </>
   );
-}
+};
 
 export default App;
