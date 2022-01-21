@@ -19,6 +19,8 @@ const AuthContext = createContext<{
 let expirationTimer;
 
 const AuthContextProvider: React.FC = ({ children }) => {
+  const [token, setToken] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
   const isLoggedIn = !!token;
 
   const login = (token, uid, expiration) => {

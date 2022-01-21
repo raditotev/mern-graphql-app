@@ -5,14 +5,15 @@ import Modal from '../components/UI/Modal';
 import Spinner from '../components/UI/Spinner';
 import EventsList from '../components/EventsList/EventsList';
 import { sendQuery } from '../helpers/client';
+import Event from '../models/Event';
 
 import './EventsPage.css';
 
 const EventsPage: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState<Event[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [event, setEvent] = useState(null);
+  const [event, setEvent] = useState<Event | null>(null);
 
   const { isLoggedIn, token, userId } = useAuth();
 
