@@ -6,8 +6,8 @@ import { sendQuery } from '../helpers/client';
 
 const AuthPage: React.FC = () => {
   const [isLoginForm, setIsLoginForm] = useState(true);
-  const emailInput = useRef();
-  const passwordInput = useRef();
+  const emailInput = useRef<HTMLInputElement>(null);
+  const passwordInput = useRef<HTMLInputElement>(null);
   const history = useHistory();
 
   const { login } = useAuth();

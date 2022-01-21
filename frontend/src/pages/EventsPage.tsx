@@ -16,10 +16,10 @@ const EventsPage: React.FC = () => {
 
   const { isLoggedIn, token, userId } = useAuth();
 
-  const titleRef = useRef();
-  const descriptionRef = useRef();
-  const priceRef = useRef();
-  const dateRef = useRef();
+  const titleRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
+  const priceRef = useRef<HTMLInputElement>(null);
+  const dateRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const fetchEvents = async () => {
