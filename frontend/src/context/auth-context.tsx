@@ -1,6 +1,20 @@
 import { createContext, useEffect, useState } from 'react';
 
-const AuthContext = createContext();
+const AuthContext = createContext<{
+  token: string | null;
+  userId: string | null;
+  login: (token: string, uid: string, expiration: number) => void;
+  logout: () => void;
+  isLoggedIn: boolean;
+  inContext: boolean;
+}>({
+  token: null,
+  userId: null,
+  login: () => {},
+  logout: () => {},
+  isLoggedIn: false,
+  inContext: false,
+});
 
 let expirationTimer;
 
