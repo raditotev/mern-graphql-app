@@ -1,4 +1,5 @@
 import useAuth from '../../hooks/auth-hook';
+
 import './EventsItem.css';
 
 const EventsItem: React.FC<{
@@ -7,7 +8,7 @@ const EventsItem: React.FC<{
   price: number;
   date: string;
   creator: string;
-  onBookEvent;
+  onBookEvent: (eventId: string) => void;
 }> = ({ id, title, price, date, creator, onBookEvent }) => {
   const { userId } = useAuth();
   const isAuthor = userId === creator;
