@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { AuthContext } from '../context/auth-context';
 
-const useAuth = (props) => {
+const useAuth = () => {
   const authContext = useContext(AuthContext);
 
   if (!authContext.inContext) {
