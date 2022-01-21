@@ -1,17 +1,16 @@
 import './Modal.css';
 
-const Backdrop = ({ onCancel }) => (
+const Backdrop: React.FC<{ onCancel: () => void }> = ({ onCancel }) => (
   <div className="modal-backdrop" onClick={onCancel}></div>
 );
 
-const Modal = ({
-  title,
-  onCancel,
-  canConfirm,
-  onConfirm,
-  confirmText,
-  children,
-}) => {
+const Modal: React.FC<{
+  title: string;
+  onCancel: () => void;
+  canConfirm?: boolean;
+  onConfirm: () => void;
+  confirmText?: string;
+}> = ({ title, onCancel, canConfirm, onConfirm, confirmText, children }) => {
   return (
     <>
       <Backdrop onCancel={onCancel} />

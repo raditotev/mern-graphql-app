@@ -1,6 +1,9 @@
 import './BookingsControl.css';
 
-const BookingsControl = ({ isListing, onChange }) => {
+const BookingsControl: React.FC<{
+  isListing: boolean;
+  onChange: () => void;
+}> = ({ isListing, onChange }) => {
   return (
     <div className="bookings-control">
       <button className={isListing ? 'active' : null} onClick={onChange}>

@@ -1,8 +1,11 @@
+import Booking from '../../models/Booking';
+
 import './BookingsList.css';
 
-import React from 'react';
-
-const BookingsList = ({ bookings, onCancelBooking }) => {
+const BookingsList: React.FC<{
+  bookings: Booking[];
+  onCancelBooking: (bookingId: string) => void;
+}> = ({ bookings, onCancelBooking }) => {
   return (
     <ul className="bookings-list">
       {bookings.map((booking) => (

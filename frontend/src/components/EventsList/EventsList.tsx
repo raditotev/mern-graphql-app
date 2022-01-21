@@ -3,10 +3,10 @@ import Event from '../../models/Event';
 
 import './EventsList.css';
 
-const EventsList: React.FC<{ events: Event[]; onBookEvent: any }> = ({
-  events,
-  onBookEvent,
-}) => {
+const EventsList: React.FC<{
+  events: Event[];
+  onBookEvent: (eventId: string) => any;
+}> = ({ events, onBookEvent }) => {
   if (events.length === 0) {
     return null;
   }
